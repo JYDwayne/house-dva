@@ -37,7 +37,7 @@ class ProductList extends Component {
         render: (text, record) => {
           return (
             <Popconfirm title="Delete?" onConfirm={() => this.props.onDelete(record.id)}>
-              <Button>Delete</Button>
+              <Button>Deleteeee</Button>
             </Popconfirm>
           );
         },
