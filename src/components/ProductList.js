@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Popconfirm, Button } from 'antd';
+import { Table, Popconfirm, Button, Pagination } from 'antd';
+
+//引入翻页服务
+// import { requestListFromServer } from '../utils/request';
+
 
 class ProductList extends Component {
   constructor(args) {
     super(args);
   }
-
-  //加载结束
-  // loadingDown() {
-  //   this.setState({
-  //     isLoading: false
-  //   })
-  // }
+  changePage(currentPage, pageCount) {
+    this.props.dispatch({
+      type: 'products/getlist',
+      payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0&index='+currentPage
+    })
+  }
 
   render() {
-    console.log(this.props);
     const columns = [{
         title: 'Name',
         dataIndex: 'content',
@@ -30,12 +32,21 @@ class ProductList extends Component {
         },
       }];
     return (
-      <Table
-        dataSource={this.props.products}
-        loading = { !this.props.isLoad }
-        columns={columns}
-        rowKey='id'
-      />
+        <div>
+          <Table
+            dataSource={this.props.products}
+            loading = { !this.props.isLoad }
+            pagination = {
+              {
+                total: this.props.totalNum,
+                defaultPageSize: 10,
+                onChange: (page, pageSize) => this.changePage(page, pageSize)
+              }
+            }
+            columns={columns}
+            rowKey='id'
+          />
+        </div>
     );
   }
 }

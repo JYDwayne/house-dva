@@ -36,7 +36,7 @@ function requestListFromServer(url, options) {
   return fetchjsonp(url)
     .then( parseJSON )
     .then( data => {
-      return data.data.data;
+      return data.data;
     })
 }
 

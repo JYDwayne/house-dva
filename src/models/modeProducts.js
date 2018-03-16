@@ -15,25 +15,33 @@ import ProductList from '../components/ProductList'
 export default {
   namespace: 'products',
   state: {
-    
   },
   reducers: {
     'delete'(state, { payload: id }) {
-      return state.productsList.filter(item => item.id !== id);
+      return {
+        ...state,
+        productsList: [...state.productsList.filter(item => item.id !== id)]
+      }
     },
     'initdata'(state, { payload: result }) {
     	return {
-        productsList: [...result],
-        isLoading: true
+        productsList: [...result.data],
+        totalNum: result.totalCount
+      }
+    },
+    'showLoad'(state, { payload: status }) {
+      return {
+        ...state,
+        isLoading: status
       }
     }
   },
   effects: {
   	*getlist({payload: url}, {put, call}) {
+      yield put({type: 'showLoad', payload: false});
       let result = yield call(requestListFromServer, url);
-      console.log(result);
-      // ProductList.loadingDown()
-      yield put({ type: 'initdata', payload: result });
+      yield put({type: 'initdata', payload: result});
+      yield put({type: 'showLoad', payload: true});
   	}
   }
 };

@@ -15,7 +15,7 @@ class Products extends Component {
 
 	componentDidMount() {
 	    //获取后端数据
-	    let test = this.props.dispatch({
+	    this.props.dispatch({
 	    	type: 'products/getlist',
 	    	payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0'
 	    })
@@ -25,8 +25,13 @@ class Products extends Component {
 	render() {
 		return (
 			<div>
-				<h2>List of Products</h2>
-				<ProductsList onDelete={ (id) => this.handleDelete(id)} products={this.props.products.productsList} isLoad={this.props.products.isLoading}/>
+				<ProductsList
+					onDelete={ (id) => this.handleDelete(id)}
+					products={ this.props.products.productsList }
+					isLoad={ this.props.products.isLoading }
+					totalNum = { this.props.products.totalNum }
+					dispatch = { this.props.dispatch }
+				/>
 			</div>
 		)
 	}
@@ -39,7 +44,6 @@ class Products extends Component {
 }
 
 export default connect(({ products }) =>  {
-		console.log(products);
 		return {
 			products
 		}
