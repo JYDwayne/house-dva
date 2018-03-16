@@ -26,7 +26,7 @@ import { Table, Popconfirm, Button } from 'antd';
 
 class ProductList extends Component {
   constructor(args) {
-    super(args)
+    super(args);
   }
   render() {
     const columns = [{
