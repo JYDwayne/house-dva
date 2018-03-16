@@ -2,8 +2,6 @@ import fetch from 'dva/fetch';
 
 import fetchjsonp from 'fetch-jsonp';
 
-console.log(fetchjsonp);
-
 function parseJSON(response) {
   return response.json();
 }
@@ -38,7 +36,7 @@ function requestListFromServer(url, options) {
   return fetchjsonp(url)
     .then( parseJSON )
     .then( data => {
-      return data.data;
+      return data.data.data;
     })
 }
 

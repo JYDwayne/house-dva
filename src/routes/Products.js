@@ -14,25 +14,19 @@ class Products extends Component {
 	}
 
 	componentDidMount() {
-    //获取后端数据
-    // this.props.dispatch({
-    // 	type: 'products/*getlist',
-    // 	payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0'
-    // })
-
-    this.props.dispatch({
-	      type: 'products/delete',
-	      payload: 1,
-	  });
-
-  }
+	    //获取后端数据
+	    let test = this.props.dispatch({
+	    	type: 'products/getlist',
+	    	payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0'
+	    })
+	}
 
 
 	render() {
 		return (
 			<div>
 				<h2>List of Products</h2>
-				<ProductsList onDelete={ (id) => this.handleDelete(id)} products={this.props.products} />
+				<ProductsList onDelete={ (id) => this.handleDelete(id)} products={this.props.products.productsList} isLoad={this.props.products.isLoading}/>
 			</div>
 		)
 	}
@@ -44,12 +38,12 @@ class Products extends Component {
 	}
 }
 
-// export default connect(({ products }) =>  {
-// 	console.log(products);
-// 		return {
-// 			products
-// 		}
-// })(Products);
-export default connect(({ products }) => ({
-  products,
-}))(Products);
+export default connect(({ products }) =>  {
+		console.log(products);
+		return {
+			products
+		}
+})(Products);
+// export default connect(({ products }) => ({
+//   products,
+// }))(Products);

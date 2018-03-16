@@ -4,6 +4,8 @@ import key from 'keymaster';
 
 import {dely, requestListFromServer} from '../utils/request';
 
+import ProductList from '../components/ProductList'
+
 // requestListFromServer()
 
 // setTimeout(function (){
@@ -12,19 +14,26 @@ import {dely, requestListFromServer} from '../utils/request';
 
 export default {
   namespace: 'products',
-  state: [],
+  state: {
+    
+  },
   reducers: {
     'delete'(state, { payload: id }) {
-      return state.filter(item => item.id !== id);
+      return state.productsList.filter(item => item.id !== id);
     },
     'initdata'(state, { payload: result }) {
-    	return [...result]
+    	return {
+        productsList: [...result],
+        isLoading: true
+      }
     }
   },
   effects: {
   	*getlist({payload: url}, {put, call}) {
-  		yield call(requestListFromServer, url);
-      // yield put({ type: 'initdata', payload: data });
+      let result = yield call(requestListFromServer, url);
+      console.log(result);
+      // ProductList.loadingDown()
+      yield put({ type: 'initdata', payload: result });
   	}
   }
 };

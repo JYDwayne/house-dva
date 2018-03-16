@@ -2,36 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Popconfirm, Button } from 'antd';
 
-// const ProductList = ({ onDelete, products }) => {
-//   const columns = [{
-//     title: 'Name',
-//     dataIndex: 'name',
-//   }, {
-//     title: 'Actions',
-//     render: (text, record) => {
-//       return (
-//         <Popconfirm title="Delete?" onConfirm={() => onDelete(record.id)}>
-//           <Button>Delete</Button>
-//         </Popconfirm>
-//       );
-//     },
-//   }];
-//   return (
-//     <Table
-//       dataSource={products}
-//       columns={columns}
-//     />
-//   );
-// };
-
 class ProductList extends Component {
   constructor(args) {
     super(args);
   }
+
+  //加载结束
+  // loadingDown() {
+  //   this.setState({
+  //     isLoading: false
+  //   })
+  // }
+
   render() {
+    console.log(this.props);
     const columns = [{
         title: 'Name',
-        dataIndex: 'name',
+        dataIndex: 'content',
       }, {
         title: 'Actions',
         render: (text, record) => {
@@ -45,16 +32,18 @@ class ProductList extends Component {
     return (
       <Table
         dataSource={this.props.products}
+        loading = { !this.props.isLoad }
         columns={columns}
+        rowKey='id'
       />
     );
   }
 }
 
 
-ProductList.propTypes = {
-  onDelete: PropTypes.func.isRequired,
-  products: PropTypes.array.isRequired,
-};
+// ProductList.propTypes = {
+//   onDelete: PropTypes.func.isRequired,
+//   products: PropTypes.array.isRequired,
+// };
 
 export default ProductList;
