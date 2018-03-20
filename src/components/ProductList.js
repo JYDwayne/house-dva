@@ -8,12 +8,20 @@ import { Table, Popconfirm, Button, Pagination } from 'antd';
 
 class ProductList extends Component {
   constructor(args) {
+    // console.log(args);
     super(args);
   }
   changePage(currentPage, pageCount) {
     this.props.dispatch({
       type: 'products/getlist',
       payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0&index='+currentPage
+    })
+  }
+
+  testLeatest() {
+    this.props.dispatch({
+      type: 'products/testTakelatest',
+      payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0&index=5'
     })
   }
 
@@ -46,6 +54,7 @@ class ProductList extends Component {
             columns={columns}
             rowKey='id'
           />
+          <div onClick={ () => this.testLeatest()}>测试takeLeatast</div>
         </div>
     );
   }

@@ -42,11 +42,9 @@ function requestListFromServer(url, options) {
 
 //2秒返回resolved的promise
 const dely = (timer) => {
-  console.log(timer);
   return new Promise(function(res){
     setTimeout(() => {
       res();
-      console.log('resolved');
       return 'resolved'
     }, timer)
   })

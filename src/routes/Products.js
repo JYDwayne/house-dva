@@ -48,6 +48,3 @@ export default connect(({ products }) =>  {
 			products
 		}
 })(Products);
-// export default connect(({ products }) => ({
-//   products,
-// }))(Products);

@@ -1,11 +1,17 @@
 import dva from 'dva';
 import './index.css';
 
+//引入model
+import modelProduct from './models/modelProducts';
+import modelComment from './models/modelComment';
+
 // 1. Initialize
 const app = dva({
    initialState: {
     // products: {
     	
+    // }
+    // comment: {
     // }
    }
  });
@@ -14,7 +20,9 @@ const app = dva({
 // app.use({});
 
 // 3. Model
-app.model(require('./models/modeProducts').default);
+// app.model(modelProduct);
+// app.model(modelComment);
+
 
 // 4. Router
 app.router(require('./router').default);
