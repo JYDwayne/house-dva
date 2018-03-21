@@ -1,20 +1,22 @@
 //评论列表页
 import React, { Component } from "react";
 
-import { List, Avatar, Icon, Button, Spin } from 'antd';
+import { List, Avatar, Icon, Spin, Layout } from 'antd';
+
+//引入css
+import style from './CommentList.css';
+
+import { Button, Switch } from 'antd-mobile';
+
+// import 'antd-mobile/dist/antd-mobile.css';
+
+const { Header, Footer, Sider, Content } = Layout;
+
+
 
 class Commentlist extends Component {
 
-	// data = [
-	//   'Racing car sprays burning fuel into crowd.',
-	//   'Japanese princess to wed commoner.',
-	//   'Australian walks 100km after outback crash.',
-	//   'Man charged over missing wedding girl.',
-	//   'Los Angeles battles huge wildfires.',
-	// ]
-
 	componentDidMount() {
-		
   }
 
 	render() {
@@ -26,11 +28,12 @@ class Commentlist extends Component {
 		);
 		const loadMore = (
 			<div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
-				<Button>查看更多</Button>
+				<Button className={style.title}>查看更多</Button>
 			</div>
 		)
 		return (
 			<div>
+				
 		    <List
 		      header={<div>评论列表</div>}
 		      itemLayout="vertical"
@@ -38,6 +41,13 @@ class Commentlist extends Component {
 		      renderItem={item => {
 		      	return (
 		      		<List.Item
+		      		extra={
+		      			<Switch
+								disabled={false}
+								checked={false}
+								onChange={ (checked) => { checked =!checked } }
+		        />
+		      		}
 		      			key={item.id}
 		      			actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text={item.replyCount} />]}
 		      		>
@@ -52,11 +62,6 @@ class Commentlist extends Component {
 			</div>
 		)
 	}
-
-	// goToDetail() {
-	// 	console.log('gotodetail');
-	// }
-
 }
 
 export default Commentlist
