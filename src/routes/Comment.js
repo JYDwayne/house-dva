@@ -5,16 +5,18 @@ import CommentList from '../components/CommentList';
 
 class Comment extends React.Component  {
 
+  componentWillMount() {
+
+  }
+
   componentDidMount() {
-      //获取后端数据
-      this.props.dispatch({
-        type: 'comment/getlist',
-        payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0'
-      })
+    this.props.dispatch({
+      type: 'comment/getlist',
+      payload: 'http://comment.house.ifeng.com/api/comment/list?houseId=39402&type=0&pic=0'
+    })
   }
 
   render() {
-    console.log(this.props.comment);
     return (
       <CommentList
         data={ this.props.comment }
@@ -22,11 +24,12 @@ class Comment extends React.Component  {
     )
   }
 
-  // methods
+  componentWillReceiveProps(nextProps) {
+
+  }
 }
 
 export default connect( ({comment}) => {
-  // console.log(comment);
   return {
     comment
   }

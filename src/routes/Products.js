@@ -13,7 +13,7 @@ class Products extends Component {
 		super(args)
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 	    //获取后端数据
 	    this.props.dispatch({
 	    	type: 'products/getlist',

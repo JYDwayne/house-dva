@@ -1,4 +1,4 @@
-//评论列表页
+// //评论列表页
 import React, { Component } from "react";
 
 import { List, Avatar, Icon, Spin, Layout } from 'antd';
@@ -6,9 +6,13 @@ import { List, Avatar, Icon, Spin, Layout } from 'antd';
 //引入css
 import style from './CommentList.css';
 
-import { Button, Switch } from 'antd-mobile';
+import { Button } from 'antd-mobile';
+
+import { Switch } from 'antd';
 
 // import 'antd-mobile/dist/antd-mobile.css';
+
+import { createForm } from 'rc-form';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -16,7 +20,38 @@ const { Header, Footer, Sider, Content } = Layout;
 
 class Commentlist extends Component {
 
-	componentDidMount() {
+	constructor(props) {
+		super(props);
+		this.state = {
+			showComment: []
+		}
+	}
+
+	componentWillUpdate() {
+
+  }
+
+  componentWillMount() {
+  	// console.log(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.data.commentsList){
+    	let showState = [];
+    	this.props.data.commentsList.forEach((index, ele) => {
+    		showState.push(true)
+    	})
+    	this.setState((prevState) => {
+    		return {
+    			...prevState,
+    			showComment: showState
+    		}
+    	})
+    }
+  }
+
+  componentDidUpdate() {
+  	// console.log(this.props);
   }
 
 	render() {
@@ -31,29 +66,25 @@ class Commentlist extends Component {
 				<Button className={style.title}>查看更多</Button>
 			</div>
 		)
+
+		const { getFieldProps } = this.props.form;
+
 		return (
 			<div>
-				
 		    <List
 		      header={<div>评论列表</div>}
 		      itemLayout="vertical"
 		      dataSource={this.props.data.commentsList}
-		      renderItem={item => {
+		      renderItem={(item, index) => {
 		      	return (
 		      		<List.Item
-		      		extra={
-		      			<Switch
-								disabled={false}
-								checked={false}
-								onChange={ (checked) => { checked =!checked } }
-		        />
-		      		}
 		      			key={item.id}
-		      			actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text={item.replyCount} />]}
+		      			actions={this.state.showComment[index] ? [<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />] : null}
 		      		>
                 <div>
                 	{item.content}
                 </div>
+                <Switch defaultChecked onChange={ (checked) => {this.switchFunction(checked, index)}  } />
 		      		</List.Item>
 		      	)
 		      }}
@@ -62,10 +93,114 @@ class Commentlist extends Component {
 			</div>
 		)
 	}
+
+	switchFunction(checked, index) {
+		this.setState((prevState) => {
+			let tempStr = prevState.showComment;
+			tempStr.splice(index, 1, checked)
+			return {
+				...prevState,
+				showComment: tempStr
+			}
+		})
+
+	}
 }
 
-export default Commentlist
+export default createForm()(Commentlist)
 
+// import { List, Switch } from 'antd-mobile';
+// import { createForm } from 'rc-form';
+
+// let SwitchExample = (props) => {
+//   const { getFieldProps } = props.form;
+//   return (
+//     <List
+//       renderHeader={() => 'Form switch'}
+//     >
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch1', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           onClick={(checked) => { console.log(checked); }}
+//         />}
+//       >On</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch2', {
+//             initialValue: false,
+//             valuePropName: 'checked',
+//           })}
+//           onClick={(checked) => { console.log(checked); }}
+//         />}
+//       >Off</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch3', {
+//             initialValue: false,
+//             valuePropName: 'checked',
+//           })}
+//           onClick={(checked) => { console.log(checked); }}
+//           disabled
+//         />}
+//       >Disabled off</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch4', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           onClick={(checked) => { console.log(checked); }}
+//           disabled
+//         />}
+//       >Disabled on</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch5', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           platform="android"
+//         />}
+//       >Style for Android</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch6', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           platform="android"
+//           color="red"
+//         />}
+//       >Color for Android</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch7', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           platform="ios"
+//         />}
+//       >Style for iOS</List.Item>
+//       <List.Item
+//         extra={<Switch
+//           {...getFieldProps('Switch8', {
+//             initialValue: true,
+//             valuePropName: 'checked',
+//           })}
+//           platform="ios"
+//           color="red"
+//         />}
+//       >Color for iOS</List.Item>
+//     </List>
+//   );
+// };
+
+// SwitchExample = createForm()(SwitchExample);
+
+// export default SwitchExample
 
 // import React, { Component } from "react";
 

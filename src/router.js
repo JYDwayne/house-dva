@@ -7,7 +7,6 @@ import Commentlist from './routes/Comment';
 
 //动态加载路由hemodel
 import dynamic from 'dva/dynamic';
-console.log(dynamic);
 
 
 function RouterConfig({ history, app }) {
@@ -36,6 +35,7 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/Comment')
   });
 
+  //转换开关Component
   return (
     <Router history={history}>
       <Switch>
